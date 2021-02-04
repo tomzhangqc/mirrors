@@ -21,10 +21,10 @@ public class MirrorSource implements PropertySourceLocator {
     @Override
     public PropertySource<?> locate(Environment environment) {
         RestTemplate restTemplate = new RestTemplate();
-        Config config = restTemplate.getForObject("http://127.0.0.1:8081/getConfig", Config.class);
+        String config = restTemplate.getForObject("http://127.0.0.1:8880/getConfig", String.class);
         log.info("config is {}", config);
         Map<String, Object> map = new HashMap<>();
-        map.put("hello.name", config.getName());
+        map.put("hello.name", "1");
         MirrorPropertySource mirrorPropertySource = new MirrorPropertySource("mirrorConfig", map);
         CompositePropertySource composite = new CompositePropertySource("mirrorConfig");
         composite.addFirstPropertySource(mirrorPropertySource);
