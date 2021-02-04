@@ -1,0 +1,3 @@
+org.springframework.cloud.bootstrap.BootstrapConfiguration=\
+mirror.config.MirrorConfigAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
