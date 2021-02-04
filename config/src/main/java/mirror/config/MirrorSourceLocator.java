@@ -16,11 +16,11 @@ import java.util.Map;
  */
 @Slf4j
 @Order(0)
-public class MirrorSource implements PropertySourceLocator {
+public class MirrorSourceLocator implements PropertySourceLocator {
 
     private MirrorProperties mirrorProperties;
 
-    public MirrorSource(MirrorProperties mirrorProperties) {
+    public MirrorSourceLocator(MirrorProperties mirrorProperties) {
         this.mirrorProperties = mirrorProperties;
     }
 

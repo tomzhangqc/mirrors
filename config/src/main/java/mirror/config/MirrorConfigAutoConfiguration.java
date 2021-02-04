@@ -20,8 +20,8 @@ public class MirrorConfigAutoConfiguration {
 
 
     @Bean
-    @ConditionalOnMissingBean(MirrorSource.class)
-    public MirrorSource source(MirrorProperties mirrorProperties){
-        return new MirrorSource(mirrorProperties);
+    @ConditionalOnMissingBean(MirrorSourceLocator.class)
+    public MirrorSourceLocator source(MirrorProperties mirrorProperties){
+        return new MirrorSourceLocator(mirrorProperties);
     }
 }
