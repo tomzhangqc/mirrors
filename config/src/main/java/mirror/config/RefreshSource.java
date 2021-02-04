@@ -9,9 +9,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cloud.endpoint.event.RefreshEvent;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -24,7 +26,7 @@ import java.util.concurrent.*;
  * @description
  */
 @Slf4j
-public class RefreshSource implements ApplicationContextAware {
+public class RefreshSource implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
 
@@ -40,11 +42,17 @@ public class RefreshSource implements ApplicationContextAware {
     }
 
     public void start() {
-        ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
+        ExecutorService executorService =
+                Executors.newScheduledThreadPool(1, r -> {
+                    Thread t = new Thread(r);
+                    t.setName("config get thread" );
+                    t.setDaemon(true);
+                    return t;
+                });
         Callable callable = (Callable<Object>) () -> {
             while (true) {
-                longPolling(mirrorProperties.getServerAddress()+"/listener","1111");
-//                refresh();
+                longPolling(mirrorProperties.getServerAddress() + "/listener", "1111");
+                refresh();
             }
         };
         executorService.submit(callable);
@@ -87,5 +95,10 @@ public class RefreshSource implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void onApplicationEvent(ApplicationReadyEvent event) {
+
     }
 }

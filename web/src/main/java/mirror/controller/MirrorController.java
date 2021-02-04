@@ -1,5 +1,7 @@
 package mirror.controller;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,11 +10,16 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021/2/4
  * @description
  */
+@RefreshScope
 @RestController
 public class MirrorController {
 
-    @GetMapping("/")
+    @Value("${name}")
+    private String name;
+
+    @GetMapping("/get")
     public String start(){
-        return "success";
+        return name;
     }
+
 }
