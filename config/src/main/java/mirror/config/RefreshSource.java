@@ -43,8 +43,7 @@ public class RefreshSource implements ApplicationContextAware {
         ExecutorService executorService = new ThreadPoolExecutor(1, 1, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue());
         Callable callable = (Callable<Object>) () -> {
             while (true) {
-                Thread.sleep(3000);
-                longPolling(mirrorProperties.getServerAddress(),"1111");
+                longPolling(mirrorProperties.getServerAddress()+"/listener","1111");
 //                refresh();
             }
         };

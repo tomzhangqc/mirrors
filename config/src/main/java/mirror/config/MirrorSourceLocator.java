@@ -31,7 +31,7 @@ public class MirrorSourceLocator implements PropertySourceLocator {
     @Override
     public PropertySource<?> locate(Environment environment) {
         RestTemplate restTemplate = new RestTemplate();
-        String config = restTemplate.getForObject(mirrorProperties.getServerAddress(), String.class);
+        String config = restTemplate.getForObject(mirrorProperties.getServerAddress() + "/mirror", String.class);
         log.info("+++++++++++++++config is {}", config);
         Map<String, Object> map = new HashMap<>();
         map.put("hello.name", "1");

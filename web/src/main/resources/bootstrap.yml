@@ -3,4 +3,4 @@ spring:
     mirror:
       flag: true
       config:
-        server-address: "http://localhost:8880/mirror"
+        server-address: "http://localhost:8880"
