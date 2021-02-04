@@ -18,11 +18,17 @@ import java.util.Map;
 @Order(0)
 public class MirrorSource implements PropertySourceLocator {
 
+    private MirrorProperties mirrorProperties;
+
+    public MirrorSource(MirrorProperties mirrorProperties) {
+        this.mirrorProperties = mirrorProperties;
+    }
+
     @Override
     public PropertySource<?> locate(Environment environment) {
         RestTemplate restTemplate = new RestTemplate();
-        String config = restTemplate.getForObject("http://127.0.0.1:8880/getConfig", String.class);
-        log.info("config is {}", config);
+        String config = restTemplate.getForObject(mirrorProperties.getServerAddress(), String.class);
+        log.info("+++++++++++++++config is {}", config);
         Map<String, Object> map = new HashMap<>();
         map.put("hello.name", "1");
         MirrorPropertySource mirrorPropertySource = new MirrorPropertySource("mirrorConfig", map);

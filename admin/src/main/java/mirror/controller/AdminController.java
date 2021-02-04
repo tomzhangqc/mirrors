@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class AdminController {
 
-    @GetMapping("/getConfig")
+    @GetMapping("/mirror")
     public String getConfig(){
         return "zhang";
     }
