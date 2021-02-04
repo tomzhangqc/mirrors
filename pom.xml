@@ -19,6 +19,7 @@
     <modules>
         <module>config</module>
         <module>web</module>
+        <module>admin</module>
     </modules>
 
     <properties>

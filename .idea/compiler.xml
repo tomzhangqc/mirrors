@@ -8,11 +8,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config" />
         <module name="web" />
+        <module name="admin" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="admin" options="-parameters" />
       <module name="config" options="-parameters" />
       <module name="web" options="-parameters" />
     </option>
