@@ -42,7 +42,7 @@ public class AdminController {
         return "zhang";
     }
 
-    @GetMapping("listener")
+    @GetMapping("/listener")
     public void listener(HttpServletRequest request, HttpServletResponse response) {
         String dataId = request.getParameter("dataId");
         AsyncContext asyncContext = request.startAsync(request, response);
