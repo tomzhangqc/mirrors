@@ -1,6 +1,7 @@
 package mirror.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.bootstrap.config.PropertySourceLocator;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.env.CompositePropertySource;
@@ -18,6 +19,9 @@ import java.util.Map;
 @Order(0)
 public class MirrorSourceLocator implements PropertySourceLocator {
 
+    @Autowired
+    RefreshSource refreshSource;
+
     private MirrorProperties mirrorProperties;
 
     public MirrorSourceLocator(MirrorProperties mirrorProperties) {
@@ -34,6 +38,7 @@ public class MirrorSourceLocator implements PropertySourceLocator {
         MirrorPropertySource mirrorPropertySource = new MirrorPropertySource("mirrorConfig", map);
         CompositePropertySource composite = new CompositePropertySource("mirrorConfig");
         composite.addFirstPropertySource(mirrorPropertySource);
+        refreshSource.start();
         return composite;
     }
 

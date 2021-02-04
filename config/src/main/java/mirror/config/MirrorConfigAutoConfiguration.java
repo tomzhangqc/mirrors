@@ -9,19 +9,25 @@ import org.springframework.context.annotation.Configuration;
  * @author winters
  */
 @Configuration
-@ConditionalOnProperty(name = "spring.cloud.mirror.flag",matchIfMissing = true)
+@ConditionalOnProperty(name = "spring.cloud.mirror.flag", matchIfMissing = true)
 public class MirrorConfigAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean
-    public MirrorProperties configProperties() {
+    public MirrorProperties mirrorProperties() {
         return new MirrorProperties();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    public RefreshSource refreshSource(MirrorProperties mirrorProperties) {
+        return new RefreshSource(mirrorProperties);
     }
 
 
     @Bean
     @ConditionalOnMissingBean(MirrorSourceLocator.class)
-    public MirrorSourceLocator source(MirrorProperties mirrorProperties){
+    public MirrorSourceLocator mirrorSourceLocator(MirrorProperties mirrorProperties) {
         return new MirrorSourceLocator(mirrorProperties);
     }
 }
